@@ -20,3 +20,9 @@ fun validatePuzzle((addends,sum)) =
     in
 	checkWords(addends) andalso checkWords([sum])
     end;
+
+(1,validatePuzzle(["A","B"],"C"));
+(2,validatePuzzle(["A"],"A"));
+(3,validatePuzzle([""],"A") = false);
+(4,validatePuzzle([],"A") = false);
+(5,validatePuzzle(["A"],"") = false);
