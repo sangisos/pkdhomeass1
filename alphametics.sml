@@ -8,7 +8,7 @@ fun validatePuzzle((addends,sum)) =
 				       checkWords r
     in
 	if checkWords(addends) orelse checkWords([sum]) then
-	    true
+	    true (*TODO: Will be implemented*)
 	else
 	    false
     end;
