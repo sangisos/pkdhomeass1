@@ -6,29 +6,17 @@ PRE: x must not be [], . x and y must not be "". All characters in x and y
 POST: true if x and y produces a valid arithmetic puzzle, otherwise false.
 EXAMPLE: (["SEND, "MORE"], "MONEY") = true
 
-
-
 *)
-
-fun checkCapitalization ( [] ) = false (* should never end up here *)
-	  | checkCapitalization ( [c] ) = if Char.isLower c then
-					      false
-					  else
-					      true
-	  | checkCapitalization ( c::r ) = if Char.isLower c then
-					       false
-					   else
-					       checkCapitalization(r);
-fun checkWords [] = false
-	  | checkWords [word] =  if word = "" then 
-				       false
-				   else
-				       checkCapitalization(explode(word))
-	  | checkWords (word::r) = if word = "" then 
-				       false
-				   else
-				       checkCapitalization(explode(word)) andalso checkWords r;
-
-fun validatePuzzle((addends,sum)) = 
-    checkWords(addends) andalso checkWords([sum]);
-    
+fun validatePuzzle((addends,sum)) =
+    let
+	fun checkCapitalization [] = false
+	  | checkCapitalization [c] = Char.isUpper c
+	  | checkCapitalization (c::r) = Char.isUpper c andalso
+				       checkCapitalization(r)
+	fun checkWords [] = false
+	  | checkWords [word] = checkCapitalization( explode(word) )
+	  | checkWords (word::r) = checkCapitalization(explode(word))
+				   andalso checkWords r
+    in
+	checkWords(addends) andalso checkWords([sum])
+    end;
