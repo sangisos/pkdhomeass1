@@ -29,3 +29,6 @@ fun validatePuzzle((addends,sum)) =
 (6,validatePuzzle(["A"],"a") = false);
 (7,validatePuzzle(["a"],"A") = false);
 (8,validatePuzzle(["A","b"],"C") = false);
+(9,validatePuzzle(["AAA","BBB"],"CCC"));
+(10,validatePuzzle(["AAA","BbB"],"CCC") = false);
+(11,validatePuzzle(["AAA","BBB"],"CcC") = false);
