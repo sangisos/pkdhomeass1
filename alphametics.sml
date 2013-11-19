@@ -1,6 +1,9 @@
+(* validatePuzzle((x,y))
+PRE: x must not be []. x and y must not be "". 
+POST:
 
 
-(*test*)
+*)
 fun validatePuzzle((addends,sum)) = 
     let 
 	fun checkWords [] = true
