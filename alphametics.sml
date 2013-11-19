@@ -1,4 +1,6 @@
 
+
+(*test*)
 fun validatePuzzle((addends,sum)) = 
     let 
 	fun checkWords [] = true
