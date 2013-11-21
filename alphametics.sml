@@ -118,7 +118,6 @@ fun checkIfFirstIsNotZero ((addends,sum), []) = true
 		let 
 
 
-	 	fun checkMapping solution = 
 
 	 	fun checkSum ((addends, sum), solution) =
 		in
