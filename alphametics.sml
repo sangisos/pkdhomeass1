@@ -1,10 +1,27 @@
-(* validatePuzzle((x,y))
+(* 
+validatePuzzle((x,y))
 TYPE: string list * string -> bool
 PRE: x must not be [], . x and y must not be "". All characters in x and y
 	must be alphabetic capitals, and there can be no more than 10 different
 	letters in total.
 POST: true if x and y produces a valid arithmetic puzzle, otherwise false.
 EXAMPLE: (["SEND, "MORE"], "MONEY") = true
+
+checkCapitalization (l)
+TYPE: 'a list -> bool
+PRE: 
+POST:
+EXAMPLE:
+VARIANT:
+
+checkWords (l)
+TYPE: 
+PRE:
+POST:
+EXAMPLE:
+VARIANT:
+
+
 
 *)
 fun validatePuzzle((addends,sum)) =
@@ -69,3 +86,24 @@ fun validateSolution [] = false
 (10,validateSolution([(#"A",1),(#"A",2)]) = false);
 (11,validateSolution([(#"A",1),(#"B",2)]) = true);
 (12,validateSolution([(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
+
+
+
+(* check ((x,y), l) 
+   TYPE:
+   PRE: 
+   POST:
+   EXAMPLE:
+   *)
+
+fun check ((addends, sum),solution)
+
+
+
+
+
+
+
+
+
+
