@@ -121,17 +121,17 @@ fun check ((addends, sum), solution) =
     andalso validateSolution (solution)
     andalso
     let
-	fun getValue (letter, []) = 0
-	  | getValue (letter, (l,digit)::rest) =
-	    if l=letter then digit else getValue(letter,rest)
+	fun getDigit (letter, (l,digit)::rest) =
+	    if l=letter then digit else getDigit(letter,rest)
 					
 	fun getValueOfWord "" = 0
 	  | getValueOfWord word = 
 	    getValueOfWord(
 	    String.substring( word, 0, size(word)-1 )
-	    ) * 10 + getValue(
+	    ) * 10 + getDigit(
 	    String.sub( word, size(word)-1 ), solution
 	    )
+	    
 	fun sumList [] = 0
 	  | sumList (x::xs) = x + sumList(xs)
 			     
@@ -142,10 +142,9 @@ fun check ((addends, sum), solution) =
 	fun checkIfFirstIsNotZero ([]) = true
 	  | checkIfFirstIsNotZero ((letter,0)::solution) = 
 	    let
-		fun ok word = String.sub(word,0) <> letter
-		fun allOk [] = false
-		  | allOk (word::[]) = ok(word)
-		  | allOk (word::rest) = ok(word) andalso allOk(rest)
+		fun allOk [] = true
+		  | allOk (word::rest) = String.sub(word,0) <> letter
+					 andalso allOk(rest)
 	    in
 		allOk(addendsSumList)
 	    end
