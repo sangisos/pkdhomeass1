@@ -129,12 +129,24 @@ fun checkMapping ("", solution) = true
 (1, checkMapping("SENDMOREMONEY",[(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
 (2, checkMapping("SENDMOREMONEY",[(#"D",7),(#"L",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = false);
 
-fun checkSum ((addends, sum), solution) = true; (*placeholder*)
+fun checkSum ((addends, sum), solution) =
+    let
+	fun getValue (letter, (l,digit)::solution) =
+	    if l=letter then digit else getValue(letter,solution)
+	
+	fun getValueOfWord "" = 0
+	  | getValueOfWord word = getValueOfWord( String.substring( word, 0, size(word)-1)) * 10 + getValue( String.sub( word, size(word)-1), solution)
+	fun sumList [] = 0
+	  | sumList (a::b) = a + sumList(b) 
+    in
+	sumList(map getValueOfWord addends) = getValueOfWord(sum)
+    end;
 
-
-(*fun check ((addends, sum),solution) = if validatePuzzle ((addends, sum)) andalso validateSolution (solution) then
-		let 
-		    
+fun check ((addends, sum),solution) = 
+      validatePuzzle ((addends, sum))
+      andalso validateSolution (solution)
+      andalso
+		let
 		    val addendsSumList = sum::addends
 		    fun makeString [] = ""
 		      | makeString (word::rest) = word ^ makeString(rest)
@@ -143,9 +155,10 @@ fun checkSum ((addends, sum), solution) = true; (*placeholder*)
 		    checkIfFirstIsNotZero((addends, sum), solution)
 		    andalso
 	 	    checkMapping ( makeString(addendsSumList), solution)
-		    
+		    andalso
+		    checkSum((addends, sum), solution)
 		end;
 
 
-	else false*)
-
+(1, check((["SEND","MORE"],"MONEY"),[(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
+(2, check((["SEND","MORE"],"MONEY"),[(#"D",3),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
