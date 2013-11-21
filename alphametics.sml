@@ -89,6 +89,8 @@ fun validateSolution [] = false
 (11,validateSolution([(#"A",1),(#"B",2)]) = true);
 (12,validateSolution([(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
 (13, validateSolution([(#"4",8)]) = false);
+(14, validateSolution([(#"#",8)]) = false);
+(15, validateSolution([(#"'",8)]) = false);
 
 
 
