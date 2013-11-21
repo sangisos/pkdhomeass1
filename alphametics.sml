@@ -101,10 +101,20 @@ fun validateSolution [] = false
    EXAMPLE:
    *)
 
-(*fun checkZero [] = true
-	 	  | checkZero x::xs = if x::xs 
+fun checkIfFirstIsNotZero ((addends,sum), []) = true
+  | checkIfFirstIsNotZero ((addends,sum), (letter,0)::solution) = 
+    let
+	fun ok word = hd(explode(word)) <> letter
+	fun allOk [] = false
+	  | allOk (word::[]) = ok(word)
+	  | allOk (word::rest) = ok(word) andalso allOk(rest)
+    in
+	allOk(sum::addends)
+    end
+  | checkIfFirstIsNotZero ((addends,sum), (letter,digit)::solution) =
+    checkIfFirstIsNotZero ((addends,sum), solution);
 
-(un check ((addends, sum),solution) = if validatePuzzle ((addends, sum)) andalso validateSolution (solution) then
+(*fun check ((addends, sum),solution) = if validatePuzzle ((addends, sum)) andalso validateSolution (solution) then
 		let 
 
 
