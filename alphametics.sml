@@ -129,36 +129,36 @@ fun checkMapping ("", solution) = true
 (1, checkMapping("SENDMOREMONEY",[(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
 (2, checkMapping("SENDMOREMONEY",[(#"D",7),(#"L",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = false);
 
-fun checkSum ((addends, sum), solution) =
+fun check ((addends, sum), solution) = 
+    validatePuzzle ((addends, sum))
+    andalso validateSolution (solution)
+    andalso
     let
-	fun getValue (letter, (l,digit)::solution) =
-	    if l=letter then digit else getValue(letter,solution)
-	
+	fun getValue (letter, []) = 0
+	  | getValue (letter, (l,digit)::rest) =
+	    if l=letter then digit else getValue(letter,rest)
+					
 	fun getValueOfWord "" = 0
-	  | getValueOfWord word = getValueOfWord( String.substring( word, 0, size(word)-1)) * 10 + getValue( String.sub( word, size(word)-1), solution)
+	  | getValueOfWord word = 
+	    getValueOfWord(
+	    String.substring( word, 0, size(word)-1 )
+	    ) * 10 + getValue(
+	    String.sub( word, size(word)-1 ), solution
+	    )
 	fun sumList [] = 0
-	  | sumList (a::b) = a + sumList(b) 
-    in
-	sumList(map getValueOfWord addends) = getValueOfWord(sum)
-    end;
-
-fun check ((addends, sum),solution) = 
-      validatePuzzle ((addends, sum))
-      andalso validateSolution (solution)
-      andalso
-		let
-		    val addendsSumList = sum::addends
-		    fun makeString [] = ""
-		      | makeString (word::rest) = word ^ makeString(rest)
-
-		in
-		    checkIfFirstIsNotZero((addends, sum), solution)
-		    andalso
-	 	    checkMapping ( makeString(addendsSumList), solution)
-		    andalso
-		    checkSum((addends, sum), solution)
-		end;
-
-
+	  | sumList (a::b) = a + sumList(b)
+			     
+	val addendsSumList = sum::addends
+	fun makeString [] = ""
+	  | makeString (word::rest) = word ^ makeString(rest)
+				      
+      in
+	  checkIfFirstIsNotZero((addends, sum), solution)
+	  andalso
+	  checkMapping ( makeString(addendsSumList), solution)
+	  andalso
+	  sumList(map getValueOfWord addends) = getValueOfWord(sum)
+      end;
+    
 (1, check((["SEND","MORE"],"MONEY"),[(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
 (2, check((["SEND","MORE"],"MONEY"),[(#"D",3),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = false);
