@@ -10,16 +10,16 @@ EXAMPLE: (["SEND, "MORE"], "MONEY") = true
 checkCapitalization (l)
 TYPE: 'a list -> bool
 PRE: 
-POST:
-EXAMPLE:
+POST: true if all the letters in l are capital letter, else false.
+EXAMPLE: checkCapitalization ["R"]
 VARIANT:
 
 checkWords (l)
-TYPE: 
+TYPE: 'a list -> bool
 PRE:
-POST:
-EXAMPLE:
-VARIANT:
+POST: true if all letters in l are capitalized, else false.
+EXAMPLE: checkWords ["SEND", "MORE"] = true
+VARIANT: length l
 
 
 
