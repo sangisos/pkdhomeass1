@@ -101,19 +101,6 @@ fun validateSolution [] = false
    EXAMPLE:
    *)
 
-fun checkIfFirstIsNotZero ((addends,sum), []) = true
-  | checkIfFirstIsNotZero ((addends,sum), (letter,0)::solution) = 
-    let
-	fun ok word = hd(explode(word)) <> letter
-	fun allOk [] = false
-	  | allOk (word::[]) = ok(word)
-	  | allOk (word::rest) = ok(word) andalso allOk(rest)
-    in
-	allOk(sum::addends)
-    end
-  | checkIfFirstIsNotZero ((addends,sum), (letter,digit)::solution) =
-    checkIfFirstIsNotZero ((addends,sum), solution);
-
 fun checkMapping ("", solution) = true
   | checkMapping (addendsSumString, solution) =
     let
@@ -146,19 +133,33 @@ fun check ((addends, sum), solution) =
 	    String.sub( word, size(word)-1 ), solution
 	    )
 	fun sumList [] = 0
-	  | sumList (a::b) = a + sumList(b)
+	  | sumList (x::xs) = x + sumList(xs)
 			     
 	val addendsSumList = sum::addends
 	fun makeString [] = ""
 	  | makeString (word::rest) = word ^ makeString(rest)
+	
+	fun checkIfFirstIsNotZero ([]) = true
+	  | checkIfFirstIsNotZero ((letter,0)::solution) = 
+	    let
+		fun ok word = String.sub(word,0) <> letter
+		fun allOk [] = false
+		  | allOk (word::[]) = ok(word)
+		  | allOk (word::rest) = ok(word) andalso allOk(rest)
+	    in
+		allOk(addendsSumList)
+	    end
+	  | checkIfFirstIsNotZero (_::rest) =
+	    checkIfFirstIsNotZero (rest);
 				      
       in
-	  checkIfFirstIsNotZero((addends, sum), solution)
+	  checkIfFirstIsNotZero(solution)
 	  andalso
 	  checkMapping ( makeString(addendsSumList), solution)
 	  andalso
-	  sumList(map getValueOfWord addends) = getValueOfWord(sum)
+	  foldl op+ 0 (map getValueOfWord addends) = getValueOfWord(sum)
       end;
     
 (1, check((["SEND","MORE"],"MONEY"),[(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
 (2, check((["SEND","MORE"],"MONEY"),[(#"D",3),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = false);
+(3, check((["SEND","MORe"],"MONEY"),[(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = false);
