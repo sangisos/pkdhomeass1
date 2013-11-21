@@ -96,7 +96,13 @@ fun validateSolution [] = false
    EXAMPLE:
    *)
 
-fun check ((addends, sum),solution)
+(*fun check ((addends, sum),solution) = if validatePuzzle ((addends, sum)) andalso validateSolution (solution) then
+		let 
+	 	fun ruleNo1 (puzzle) = 
+
+
+	else false*)
+
 
 
 
