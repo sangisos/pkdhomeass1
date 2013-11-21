@@ -114,25 +114,38 @@ fun checkIfFirstIsNotZero ((addends,sum), []) = true
   | checkIfFirstIsNotZero ((addends,sum), (letter,digit)::solution) =
     checkIfFirstIsNotZero ((addends,sum), solution);
 
+fun checkMapping ("", solution) = true
+  | checkMapping (addendsSumString, solution) =
+    let
+	fun existsIn (letter, []) = false
+	  | existsIn (letter, (l,_)::rest) =
+	     letter=l orelse
+	     existsIn (letter, rest)
+    in
+	existsIn(hd(explode(addendsSumString)),solution) andalso
+	checkMapping(String.substring(addendsSumString,1,size(addendsSumString)-1), solution)
+    end;
+
+(1, checkMapping("SENDMOREMONEY",[(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
+(2, checkMapping("SENDMOREMONEY",[(#"D",7),(#"L",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = false);
+
+fun checkSum ((addends, sum), solution) = true; (*placeholder*)
+
+
 (*fun check ((addends, sum),solution) = if validatePuzzle ((addends, sum)) andalso validateSolution (solution) then
 		let 
+		    
+		    val addendsSumList = sum::addends
+		    fun makeString [] = ""
+		      | makeString (word::rest) = word ^ makeString(rest)
 
-
-
-	 	fun checkSum ((addends, sum), solution) =
 		in
+		    checkIfFirstIsNotZero((addends, sum), solution)
+		    andalso
+	 	    checkMapping ( makeString(addendsSumList), solution)
+		    
 		end;
 
 
 	else false*)
-
-
-
-
-
-
-
-
-
-
 
