@@ -38,24 +38,26 @@ fun validatePuzzle((addends,sum)) =
 	checkWords(addends) andalso checkWords([sum])
     end;
 
-(1,validatePuzzle(["A","B"],"C"));
-(2,validatePuzzle(["A"],"A"));
+(1,validatePuzzle(["A","B"],"C") = true);
+(2,validatePuzzle(["A"],"A") = true);
 (3,validatePuzzle([""],"A") = false);
 (4,validatePuzzle([],"A") = false);
 (5,validatePuzzle(["A"],"") = false);
 (6,validatePuzzle(["A"],"a") = false);
 (7,validatePuzzle(["a"],"A") = false);
 (8,validatePuzzle(["A","b"],"C") = false);
-(9,validatePuzzle(["AAA","BBB"],"CCC"));
+(9,validatePuzzle(["AAA","BBB"],"CCC") = true);
 (10,validatePuzzle(["AAA","BbB"],"CCC") = false);
 (11,validatePuzzle(["AAA","BBB"],"CcC") = false);
 
 (* validateSolution(solution)
 TYPE: (char * int) list -> bool
-PRE:
+PRE: 
 POST:
 EXAMPLE:
+VARIANT: length solution
 *)
+
 fun validateSolution [] = false
   | validateSolution ((letter,digit)::solution) =
     let
@@ -74,18 +76,19 @@ fun validateSolution [] = false
 	    validateSolution(solution)
     end;
 
-(1,validateSolution([(#"A",1)]) = true);
-(2,validateSolution([(#"a",1)]) = false);
-(3,validateSolution([(#"A",10)]) = false);
-(4,validateSolution([(#"A",1),(#"A",1)]) = false);
-(5,validateSolution([(#"A",1),(#"B",1)]) = false);
-(6,validateSolution([(#"A",1),(#"B",10)]) = false);
-(7,validateSolution([(#"a",1),(#"B",2)]) = false);
-(8,validateSolution([(#"A",1),(#"b",2)]) = false);
-(9,validateSolution([(#"A",1),(#"A",2)]) = false);
+(1, validateSolution([]) = false);
+(2,validateSolution([(#"A",1)]) = true);
+(3,validateSolution([(#"a",1)]) = false);
+(4,validateSolution([(#"A",10)]) = false);
+(5,validateSolution([(#"A",1),(#"A",1)]) = false);
+(6,validateSolution([(#"A",1),(#"B",1)]) = false);
+(7,validateSolution([(#"A",1),(#"B",10)]) = false);
+(8,validateSolution([(#"a",1),(#"B",2)]) = false);
+(9,validateSolution([(#"A",1),(#"b",2)]) = false);
 (10,validateSolution([(#"A",1),(#"A",2)]) = false);
 (11,validateSolution([(#"A",1),(#"B",2)]) = true);
 (12,validateSolution([(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
+(13, validateSolution([(#"4",8)]) = false);
 
 
 
@@ -96,9 +99,18 @@ fun validateSolution [] = false
    EXAMPLE:
    *)
 
-(*fun check ((addends, sum),solution) = if validatePuzzle ((addends, sum)) andalso validateSolution (solution) then
+(*fun checkZero [] = true
+	 	  | checkZero x::xs = if x::xs 
+
+(un check ((addends, sum),solution) = if validatePuzzle ((addends, sum)) andalso validateSolution (solution) then
 		let 
-	 	fun ruleNo1 (puzzle) = 
+
+
+	 	fun checkMapping solution = 
+
+	 	fun checkSum ((addends, sum), solution) =
+		in
+		end;
 
 
 	else false*)
