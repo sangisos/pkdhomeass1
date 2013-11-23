@@ -10,7 +10,7 @@ checkCapitalization (l)
 TYPE: 'a list -> bool
 PRE: true
 POST: true if all the letters in l are capital letters, else false.
-EXAMPLE: checkCapitalization ["R"]
+EXAMPLE: checkCapitalization [#"S",#"E",#"N",#"D"] = true
 VARIANT: length l
 
 checkWords (l)
@@ -49,12 +49,15 @@ fun validatePuzzle((addends,sum)) =
 (10,validatePuzzle(["AAA","BbB"],"CCC") = false);
 (11,validatePuzzle(["AAA","BBB"],"CcC") = false);
 
-(* validateSolution(solution)
-TYPE: (char * int) list -> bool
-PRE: 
-POST:
-EXAMPLE: 
-VARIANT: length solution
+(*  validateSolution(l)
+	TYPE: (char * int) list -> bool
+	PRE: true
+	POST: true if l is a list of unique tuples consisting of an uppercase alphabetical character 
+		  and an integer, else false.
+	EXAMPLE: validateSolution([(#"A",1)]) = true
+	VARIANT: length l
+
+	neitherIn()
 *)
 
 fun validateSolution [] = false
