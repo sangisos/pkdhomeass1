@@ -1,28 +1,25 @@
-(* 
-validatePuzzle((x,y))
-TYPE: string list * string -> bool
-PRE: true
-POST: true if x and y produces a valid arithmetic puzzle, otherwise false.
-EXAMPLE: (["SEND, "MORE"], "MONEY") = true
-VARIANT: length x, length y
+(*	validatePuzzle((x,y))
+	TYPE: string list * string -> bool
+	PRE: true
+	POST: true if x and y produces a valid arithmetic puzzle, otherwise false.
+	EXAMPLE: (["SEND, "MORE"], "MONEY") = true
+	VARIANT: length x, length y
 
-checkCapitalization (l)
-TYPE: 'a list -> bool
-PRE: true
-POST: true if all the letters in l are capital letters, else false.
-EXAMPLE: checkCapitalization [#"S",#"E",#"N",#"D"] = true
-VARIANT: length l
+	checkCapitalization (l)
+	TYPE: 'a list -> bool
+	PRE: true
+	POST: true if all the letters in l are capital letters, else false.
+	EXAMPLE: checkCapitalization [#"S",#"E",#"N",#"D"] = true
+	VARIANT: length l
 
-checkWords (l)
-TYPE: 'a list -> bool
-PRE: true
-POST: true if checkCapitalization returns true, else false.
-EXAMPLE: checkWords ["SEND", "MORE"] = true
-VARIANT: length l
-
-
-
+	checkWords (l)
+	TYPE: 'a list -> bool
+	PRE: true
+	POST: true if checkCapitalization returns true, else false.
+	EXAMPLE: checkWords ["SEND", "MORE"] = true
+	VARIANT: length l
 *)
+
 fun validatePuzzle((addends,sum)) =
     let
 	fun checkCapitalization [] = false
@@ -49,7 +46,7 @@ fun validatePuzzle((addends,sum)) =
 (10,validatePuzzle(["AAA","BbB"],"CCC") = false);
 (11,validatePuzzle(["AAA","BBB"],"CcC") = false);
 
-(*  validateSolution(l)
+(*	validateSolution(l)
 	TYPE: (char * int) list -> bool
 	PRE: true
 	POST: true if l is a list of unique tuples consisting of an uppercase alphabetical character 
@@ -96,12 +93,12 @@ fun validateSolution [] = false
 
 
 
-(* check ((x,y), l) 
-   TYPE:
-   PRE: 
-   POST:
-   EXAMPLE:
-   *)
+(*	check ((x,y), l) 
+	TYPE:
+	PRE: 
+	POST:
+	EXAMPLE:
+*)
 
 fun checkMapping ("", solution) = true
   | checkMapping (addendsSumString, solution) =
