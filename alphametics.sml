@@ -1,23 +1,22 @@
 (* 
 validatePuzzle((x,y))
 TYPE: string list * string -> bool
-PRE: x must not be []. x and y must not be "". All characters in x and y
-	must be alphabetic capitals, and there can be no more than 10 different
-	letters in total.
+PRE: true
 POST: true if x and y produces a valid arithmetic puzzle, otherwise false.
 EXAMPLE: (["SEND, "MORE"], "MONEY") = true
+VARIANT: length x, length y
 
 checkCapitalization (l)
 TYPE: 'a list -> bool
-PRE: 
-POST: true if all the letters in l are capital letter, else false.
+PRE: true
+POST: true if all the letters in l are capital letters, else false.
 EXAMPLE: checkCapitalization ["R"]
-VARIANT:
+VARIANT: length l
 
 checkWords (l)
 TYPE: 'a list -> bool
-PRE:
-POST: true if all letters in l are capitalized, else false.
+PRE: true
+POST: true if checkCapitalization returns true, else false.
 EXAMPLE: checkWords ["SEND", "MORE"] = true
 VARIANT: length l
 
@@ -54,7 +53,7 @@ fun validatePuzzle((addends,sum)) =
 TYPE: (char * int) list -> bool
 PRE: 
 POST:
-EXAMPLE:
+EXAMPLE: 
 VARIANT: length solution
 *)
 
