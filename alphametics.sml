@@ -60,15 +60,15 @@ fun validatePuzzle((addends,sum)) =
 fun validateSolution [] = false
   | validateSolution ((letter,digit)::solution) =
     let
-	fun neitherIn ((letter,digit), []) = true
-	  | neitherIn ((letter,digit), (l,d)::rest) =
+	fun neitherIn [] = true
+	  | neitherIn ((l,d)::rest) =
 	     letter<>l andalso
 	     digit<>d andalso
-	     neitherIn ((letter,digit), rest)
+	     neitherIn (rest)
     in
 	Char.isUpper letter andalso
 	0 <= digit andalso digit <= 9 andalso
-	neitherIn((letter,digit),solution) andalso
+	neitherIn(solution) andalso
 	if solution = [] then
 	    true
 	else
