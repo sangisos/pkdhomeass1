@@ -30,9 +30,26 @@ fun validatePuzzle((addends,sum)) =
 	  | checkWords [word] = checkCapitalization( explode(word) )
 	  | checkWords (word::r) = checkCapitalization(explode(word))
 				   andalso checkWords r
+	fun listLettersInWords [] = []
+	  | listLettersInWords (word::rest) = explode(word)@listLettersInWords(rest)
+	fun uniqueLetters [] = []
+	  | uniqueLetters (letter::rest) = 
+	    let
+		val result = uniqueLetters(rest)
+	    in
+		if (List.exists (fn x => x = letter) result) then
+		    result
+		else
+		    letter::result
+	    end
     in
-	checkWords(addends) andalso checkWords([sum])
+	checkWords(addends) andalso checkWords([sum]) andalso
+	length(uniqueLetters(listLettersInWords(sum::addends))) <= 10
     end;
+
+(*
+(1,uniqueLetters([#"A",#"B",#"A"]) = [#"B",#"A"]);
+*)
 
 (1,validatePuzzle(["A","B"],"C") = true);
 (2,validatePuzzle(["A"],"A") = true);
@@ -45,6 +62,9 @@ fun validatePuzzle((addends,sum)) =
 (9,validatePuzzle(["AAA","BBB"],"CCC") = true);
 (10,validatePuzzle(["AAA","BbB"],"CCC") = false);
 (11,validatePuzzle(["AAA","BBB"],"CcC") = false);
+(12,validatePuzzle(["ABCDE","FGHIJ"],"ABCDE") = true);
+(13,validatePuzzle(["ABCDE","FGHIJK"],"ABCDED") = false);
+(14,validatePuzzle(["ABCDE","FGHIJ"],"KLMNO") = false);
 
 (*	validateSolution(l)
 	TYPE: (char * int) list -> bool
