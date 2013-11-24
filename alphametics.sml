@@ -155,7 +155,7 @@ fun check ((addends, sum), solution) =
 	  andalso
 	  checkMapping ( makeString(addendsSumList), solution)
 	  andalso
-	  foldl op+ 0 (map getValueOfWord addends) = getValueOfWord(sum)
+	  sumList (map getValueOfWord addends) = getValueOfWord(sum)
       end;
     
 (1, check((["SEND","MORE"],"MONEY"),[(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
