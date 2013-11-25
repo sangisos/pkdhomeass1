@@ -146,9 +146,9 @@ fun check ((addends, sum), solution) =
 	fun getValueOfWord "" = 0
 	  | getValueOfWord word = 
 	    getValueOfWord(
-	    String.substring( word, 0, size(word)-1 )
+	      String.substring( word, 0, size(word)-1 )
 	    ) * 10 + getDigit(
-	    String.sub( word, size(word)-1 ), solution
+	      String.sub( word, size(word)-1 ), solution
 	    )
 	    
 	fun sumList [] = 0
