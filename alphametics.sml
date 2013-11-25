@@ -152,22 +152,22 @@ fun check ((addends, sum), solution) =
     andalso validateSolution (solution)
     andalso
     let
-	
-	fun checkMapping ("", solution) = true
-	  | checkMapping (addendsSumString, solution) =
+	val addendsSumList = sum::addends
+	fun checkMapping ("") = true
+	  | checkMapping (addendsSumString) =
 	    let
 		fun existsIn (letter, []) = false
 		  | existsIn (letter, (l,_)::rest) =
 		    letter=l orelse
 		    existsIn (letter, rest)
 	    in
-		existsIn(String.sub(addendsSumString,0),solution)
+		existsIn(String.sub(addendsSumString,0), solution)
 		andalso
 		checkMapping(
    		  String.substring(addendsSumString, 1, 
 				   size(addendsSumString)-1
 				  )
-		, solution)
+		)
 	    end
 	fun getDigit (letter, (l,digit)::rest) =
 	    if l=letter then digit else getDigit(letter,rest)
@@ -182,8 +182,7 @@ fun check ((addends, sum), solution) =
 	    
 	fun sumList [] = 0
 	  | sumList (x::xs) = x + sumList(xs)
-			     
-	val addendsSumList = sum::addends
+	
 	fun makeString [] = ""
 	  | makeString (word::rest) = word ^ makeString(rest)
 	
@@ -202,7 +201,7 @@ fun check ((addends, sum), solution) =
       in
 	  checkIfFirstIsNotZero(solution)
 	  andalso
-	  checkMapping ( makeString(addendsSumList), solution)
+	  checkMapping ( makeString(addendsSumList))
 	  andalso
 	  sumList (map getValueOfWord addends) = getValueOfWord(sum)
       end;
