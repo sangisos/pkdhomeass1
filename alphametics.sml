@@ -15,8 +15,27 @@
 	checkWords (l)
 	TYPE: 'a list -> bool
 	PRE: true
-	POST: true if checkCapitalization returns true, else false.
+	POST: true if checkCapitalization for every element in l returns true, else
+		  false.
 	EXAMPLE: checkWords ["SEND", "MORE"] = true
+	VARIANT: length l
+
+	listLettersInWords (l)
+	TYPE: 'a list -> 'a list
+	PRE: 
+	POST: produces a list of uppercase alphabetical characters
+	EXAMPLE: listLettersInWords (["MONEY","SEND","MORE"]) = 
+	         [#"M",#"O",#"N",#"E",#"Y",#"S",#"E",#"N",#"D",#"M",#"O",#"R",#"E"]
+	VARIANT: 
+
+	uniqueLetters (l)
+	TYPE: 'a list -> 'a list
+	PRE: 
+	POST: produces a list of uppercase alphabetical characters
+	EXAMPLE: uniqueLetters ([#"M",#"O",#"N",#"E",#"Y"]) =
+			 [#"Y",#"E",#"N",#"O",#"M"]
+			 uniqueLetters ([#"A",#"N",#"N",#"A"]) =
+			 [#"N",#"A"]
 	VARIANT: length l
 *)
 
@@ -49,6 +68,8 @@ fun validatePuzzle((addends,sum)) =
 
 (*
 (1,uniqueLetters([#"A",#"B",#"A"]) = [#"B",#"A"]);
+(2,uniqueLetters ([#"M",#"O",#"N",#"E",#"Y"]) = [#"Y",#"E",#"N",#"O",#"M"]);
+(3,uniqueLetters ([#"A",#"N",#"N",#"A"]) = [#"N",#"A"]);
 *)
 
 (1,validatePuzzle(["A","B"],"C") = true);
