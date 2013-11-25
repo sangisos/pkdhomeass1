@@ -262,7 +262,6 @@ fun check ((addends, sum), solution) =
 	    end
 	  | checkIfFirstIsNotZero (_::rest) =
 	    checkIfFirstIsNotZero (rest);
-				      
       in
 	  checkIfFirstIsNotZero(solution)
 	  andalso
