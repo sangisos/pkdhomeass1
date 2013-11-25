@@ -152,7 +152,7 @@ fun checkMapping ("", solution) = true
 	     letter=l orelse
 	     existsIn (letter, rest)
     in
-	existsIn(hd(explode(addendsSumString)),solution) andalso
+	existsIn(String.sub(addendsSumString,0),solution) andalso
 	checkMapping(String.substring(addendsSumString,1,size(addendsSumString)-1), solution)
     end;
 
