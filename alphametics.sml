@@ -158,13 +158,55 @@ fun validateSolution [] = false
 	VARIANT: length addendsSumString
 
 	existsIn (letter, l)
-	TYPE: ''a list * (''a * 'b) -> bool 
+	TYPE: ''a * (''a * 'b) list -> bool 
 	PRE: true
 	POST: true if letter can be found in any tuple of l, else false.
 	EXAMPLE: existsIn(#"H",[(#"H",1),(#"E",2),(#"J",3)]) = true
 	VARIANT: length l
 
-	getDigit (letter, ())
+	getDigit (letter, l)
+	TYPE: ''a * (''a * 'b) list -> 'b
+	PRE: true
+	POST: 
+	EXAMPLE: getDigit (#"J",[(#"H",1),(#"E",2),(#"J",3)]) = 3
+	VARIANT: length l
+
+	getValueOfWord (word)
+	TYPE: string -> int
+	PRE:
+	POST: 
+	EXAMPLE: getValueOfWord ("HEJ") = 6 (given getDigit (#"J",[(#"H",1),(#"E",2),(#"J",3)]) = 3)
+	VARIANT: length word
+
+	sumList (l)
+	TYPE:
+	PRE:
+	POST:
+	EXAMPLE:
+	VARIANT:
+
+	makeString (l)
+	TYPE:
+	PRE:
+	POST:
+	EXAMPLE:
+	VARIANT:
+
+	checkIfFirstIsNotZero (l)
+	TYPE:
+	PRE:
+	POST:
+	EXAMPLE:
+	VARIANT:
+
+	allOk (l)
+	TYPE:
+	PRE:
+	POST:
+	EXAMPLE:
+	VARIANT:
+
+
 *)
 
 fun check ((addends, sum), solution) = 
