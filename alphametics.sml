@@ -167,34 +167,36 @@ fun validateSolution [] = false
 	getDigit (letter, l)
 	TYPE: ''a * (''a * 'b) list -> 'b
 	PRE: true
-	POST: 
+	POST: returns the value that letter is mapped to within l.
 	EXAMPLE: getDigit (#"J",[(#"H",1),(#"E",2),(#"J",3)]) = 3
 	VARIANT: length l
 
 	getValueOfWord (word)
 	TYPE: string -> int
-	PRE:
-	POST: 
+	PRE: true
+	POST: the sum of the letters in word by using getDigit.
 	EXAMPLE: getValueOfWord ("HEJ") = 6 (given getDigit (#"J",[(#"H",1),(#"E",2),(#"J",3)]) = 3)
 	VARIANT: length word
+	*DISCLAIMER: influenced by severian vodalus presented in lab 4*
 
 	sumList (l)
-	TYPE:
-	PRE:
-	POST:
-	EXAMPLE:
-	VARIANT:
+	TYPE: int list -> int
+	PRE: true
+	POST: the sum of all elements in l.
+	EXAMPLE: sumList [1,2,3,4,6] = 16
+	VARIANT: length l
+	*DISCLAIMER: taken from lab 5*
 
 	makeString (l)
-	TYPE:
-	PRE:
-	POST:
-	EXAMPLE:
-	VARIANT:
+	TYPE: string list -> string
+	PRE: true
+	POST: all of the strings in l concatinated with each other.
+	EXAMPLE: makeString ["SEND","MORE"] = "SENDMORE"
+	VARIANT: length l
 
 	checkIfFirstIsNotZero (l)
-	TYPE:
-	PRE:
+	TYPE: (char * int) list -> bool
+	PRE: true
 	POST:
 	EXAMPLE:
 	VARIANT:
