@@ -30,9 +30,26 @@ fun validatePuzzle((addends,sum)) =
 	  | checkWords [word] = checkCapitalization( explode(word) )
 	  | checkWords (word::r) = checkCapitalization(explode(word))
 				   andalso checkWords r
+	fun listLettersInWords [] = []
+	  | listLettersInWords (word::rest) = explode(word)@listLettersInWords(rest)
+	fun uniqueLetters [] = []
+	  | uniqueLetters (letter::rest) = 
+	    let
+		val result = uniqueLetters(rest)
+	    in
+		if (List.exists (fn x => x = letter) result) then
+		    result
+		else
+		    letter::result
+	    end
     in
-	checkWords(addends) andalso checkWords([sum])
+	checkWords(addends) andalso checkWords([sum]) andalso
+	length(uniqueLetters(listLettersInWords(sum::addends))) <= 10
     end;
+
+(*
+(1,uniqueLetters([#"A",#"B",#"A"]) = [#"B",#"A"]);
+*)
 
 (1,validatePuzzle(["A","B"],"C") = true);
 (2,validatePuzzle(["A"],"A") = true);
@@ -45,6 +62,9 @@ fun validatePuzzle((addends,sum)) =
 (9,validatePuzzle(["AAA","BBB"],"CCC") = true);
 (10,validatePuzzle(["AAA","BbB"],"CCC") = false);
 (11,validatePuzzle(["AAA","BBB"],"CcC") = false);
+(12,validatePuzzle(["ABCDE","FGHIJ"],"ABCDE") = true);
+(13,validatePuzzle(["ABCDE","FGHIJK"],"ABCDED") = false);
+(14,validatePuzzle(["ABCDE","FGHIJ"],"KLMNO") = false);
 
 (*	validateSolution(l)
 	TYPE: (char * int) list -> bool
@@ -63,15 +83,15 @@ fun validatePuzzle((addends,sum)) =
 fun validateSolution [] = false
   | validateSolution ((letter,digit)::solution) =
     let
-	fun neitherIn ((letter,digit), []) = true
-	  | neitherIn ((letter,digit), (l,d)::rest) =
+	fun neitherIn [] = true
+	  | neitherIn ((l,d)::rest) =
 	     letter<>l andalso
 	     digit<>d andalso
-	     neitherIn ((letter,digit), rest)
+	     neitherIn (rest)
     in
 	Char.isUpper letter andalso
 	0 <= digit andalso digit <= 9 andalso
-	neitherIn((letter,digit),solution) andalso
+	neitherIn(solution) andalso
 	if solution = [] then
 	    true
 	else
@@ -158,7 +178,7 @@ fun check ((addends, sum), solution) =
 	  andalso
 	  checkMapping ( makeString(addendsSumList), solution)
 	  andalso
-	  foldl op+ 0 (map getValueOfWord addends) = getValueOfWord(sum)
+	  sumList (map getValueOfWord addends) = getValueOfWord(sum)
       end;
     
 (1, check((["SEND","MORE"],"MONEY"),[(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
