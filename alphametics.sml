@@ -1,4 +1,4 @@
-(*	validatePuzzle((x,y))
+(*	validatePuzzle ((x,y))
 	TYPE: string list * string -> bool
 	PRE: true
 	POST: true if x and y produces a valid arithmetic puzzle, otherwise false.
@@ -87,7 +87,7 @@ fun validatePuzzle((addends,sum)) =
 (13,validatePuzzle(["ABCDE","FGHIJK"],"ABCDED") = false);
 (14,validatePuzzle(["ABCDE","FGHIJ"],"KLMNO") = false);
 
-(*	validateSolution(l)
+(*	validateSolution (l)
 	TYPE: (char * int) list -> bool
 	PRE: true
 	POST: true if l is a list of unique tuples consisting of 
@@ -96,7 +96,7 @@ fun validatePuzzle((addends,sum)) =
 			 validateSolution([(#"a",1)]) = false
 	VARIANT: length l
 
-	neitherIn(l)
+	neitherIn (l)
 	TYPE: (char * int) list -> bool
 	PRE: true
 	POST: true if all tuples in l are unique, else false.
@@ -141,12 +141,30 @@ fun validateSolution [] = false
 
 
 
-(*	check ((x,y), l) 
+(*	check ((addends,sum), solution) 
 	TYPE: (string list * string) * (char * int) list -> bool
 	PRE: true
-	POST: true if 
-	EXAMPLE:
-	VARIANT: 
+	POST: true if the first character in sum or addends is not mapped to 0, 
+		  solution is a valid mapping and the value of addends and sum are 
+		  equal by the mapping of solution.
+	EXAMPLE: check ((["SEND","MORE"],"MONEY"),[(#"D",7),(#"E",5),(#"M",1),
+			 (#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
+
+	checkMapping (addendsSumString)
+	TYPE: string -> bool
+	PRE: true
+	POST: true if every letter in addendsSumString is present in solution.
+	EXAMPLE: checkMapping ("HEJ") = true (if solution = [(#"H",1),(#"E",2),(#"J",3)])
+	VARIANT: length addendsSumString
+
+	existsIn (letter, l)
+	TYPE: ''a list * (''a * 'b) -> bool 
+	PRE: true
+	POST: true if letter can be found in any tuple of l, else false.
+	EXAMPLE: existsIn(#"H",[(#"H",1),(#"E",2),(#"J",3)]) = true
+	VARIANT: length l
+
+	getDigit (letter, ())
 *)
 
 fun check ((addends, sum), solution) = 
