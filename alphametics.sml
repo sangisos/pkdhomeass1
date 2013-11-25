@@ -93,6 +93,7 @@ fun validatePuzzle((addends,sum)) =
 	POST: true if l is a list of unique tuples consisting of 
 		  an uppercase alphabetical character and an integer, else false.
 	EXAMPLE: validateSolution([(#"A",1)]) = true
+			 validateSolution([(#"a",1)]) = false
 	VARIANT: length l
 
 	neitherIn(l)
@@ -141,10 +142,11 @@ fun validateSolution [] = false
 
 
 (*	check ((x,y), l) 
-	TYPE:
-	PRE: 
-	POST:
+	TYPE: (string list * string) * (char * int) list -> bool
+	PRE: true
+	POST: true if 
 	EXAMPLE:
+	VARIANT: 
 *)
 
 fun check ((addends, sum), solution) = 
