@@ -201,7 +201,7 @@ fun validateSolution [] = false
 	EXAMPLE:
 	VARIANT:
 
-	allOk (l)
+	firstLetterNotZero (l)
 	TYPE:
 	PRE:
 	POST:
