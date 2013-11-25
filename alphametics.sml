@@ -147,26 +147,28 @@ fun validateSolution [] = false
 	EXAMPLE:
 *)
 
-fun checkMapping ("", solution) = true
-  | checkMapping (addendsSumString, solution) =
-    let
-	fun existsIn (letter, []) = false
-	  | existsIn (letter, (l,_)::rest) =
-	     letter=l orelse
-	     existsIn (letter, rest)
-    in
-	existsIn(String.sub(addendsSumString,0),solution) andalso
-	checkMapping(String.substring(addendsSumString,1,size(addendsSumString)-1), solution)
-    end;
-
-(1, checkMapping("SENDMOREMONEY",[(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
-(2, checkMapping("SENDMOREMONEY",[(#"D",7),(#"L",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = false);
-
 fun check ((addends, sum), solution) = 
     validatePuzzle ((addends, sum))
     andalso validateSolution (solution)
     andalso
     let
+	
+	fun checkMapping ("", solution) = true
+	  | checkMapping (addendsSumString, solution) =
+	    let
+		fun existsIn (letter, []) = false
+		  | existsIn (letter, (l,_)::rest) =
+		    letter=l orelse
+		    existsIn (letter, rest)
+	    in
+		existsIn(String.sub(addendsSumString,0),solution)
+		andalso
+		checkMapping(
+   		  String.substring(addendsSumString, 1, 
+				   size(addendsSumString)-1
+				  )
+		, solution)
+	    end
 	fun getDigit (letter, (l,digit)::rest) =
 	    if l=letter then digit else getDigit(letter,rest)
 					
@@ -204,7 +206,12 @@ fun check ((addends, sum), solution) =
 	  andalso
 	  sumList (map getValueOfWord addends) = getValueOfWord(sum)
       end;
-    
+  
+(*
+(1, checkMapping("SENDMOREMONEY",[(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
+(2, checkMapping("SENDMOREMONEY",[(#"D",7),(#"L",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = false);
+*)
+
 (1, check((["SEND","MORE"],"MONEY"),[(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = true);
 (2, check((["SEND","MORE"],"MONEY"),[(#"D",3),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = false);
 (3, check((["SEND","MORe"],"MONEY"),[(#"D",7),(#"E",5),(#"M",1),(#"N",6),(#"O",0),(#"R",8),(#"S",9),(#"Y",2)]) = false);
