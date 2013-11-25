@@ -251,13 +251,14 @@ fun check ((addends, sum), solution) =
 	  | makeString (word::rest) = word ^ makeString(rest)
 	
 	fun checkIfFirstIsNotZero ([]) = true
-	  | checkIfFirstIsNotZero ((letter,0)::solution) = 
+	  | checkIfFirstIsNotZero ((letter,0)::rest) = 
 	    let
-		fun allOk [] = true
-		  | allOk (word::rest) = String.sub(word,0) <> letter
-					 andalso allOk(rest)
+		fun firstLetterNotZero [] = true
+		  | firstLetterNotZero (word::words) = 
+		    String.sub(word,0) <> letter
+		    andalso firstLetterNotZero(words)
 	    in
-		allOk(addendsSumList)
+		firstLetterNotZero(addendsSumList)
 	    end
 	  | checkIfFirstIsNotZero (_::rest) =
 	    checkIfFirstIsNotZero (rest);
