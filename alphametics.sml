@@ -95,10 +95,13 @@ fun validatePuzzle((addends,sum)) =
 	EXAMPLE: validateSolution([(#"A",1)]) = true
 	VARIANT: length l
 
-	neitherIn((x,y),l)
-	TYPE: (char * int) * (char * int) list -> bool
-	PRE: 
-	POST: true if
+	neitherIn(l)
+	TYPE: (char * int) list -> bool
+	PRE: true
+	POST: true if all tuples in l are unique, else false.
+	EXAMPLE: neitherIn([(#"A",1),(#"B",2)]) = true
+			 neitherIn([(#"A",1),(#"B",1)]) = false
+	VARIANT: length l
 *)
 
 fun validateSolution [] = false
