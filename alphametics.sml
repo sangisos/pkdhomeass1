@@ -21,16 +21,16 @@
 	VARIANT: length l
 
 	listLettersInWords (l)
-	TYPE: 'a list -> 'a list
-	PRE: 
+	TYPE: string list -> char list
+	PRE: true
 	POST: produces a list of uppercase alphabetical characters
 	EXAMPLE: listLettersInWords (["MONEY","SEND","MORE"]) = 
 	         [#"M",#"O",#"N",#"E",#"Y",#"S",#"E",#"N",#"D",#"M",#"O",#"R",#"E"]
 	VARIANT: 
 
 	uniqueLetters (l)
-	TYPE: 'a list -> 'a list
-	PRE: 
+	TYPE: ''a list -> ''a list
+	PRE: true
 	POST: produces a list of uppercase alphabetical characters
 	EXAMPLE: uniqueLetters ([#"M",#"O",#"N",#"E",#"Y"]) =
 			 [#"Y",#"E",#"N",#"O",#"M"]
