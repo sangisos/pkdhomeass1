@@ -34,11 +34,6 @@ structure PuzzleTools = struct
 	
 end
 
-exception NoSolution;
-
-datatype 'a option = None | Some of 'a
-
-
 (*	validatePuzzle ((x,y))
 	TYPE: string list * string -> bool
 	PRE: true
@@ -269,13 +264,13 @@ fun solve(addends, sum) =
 	fun zip ([],[]) = []
 	  | zip (a::resta,b::restb) = (a,b)::zip(resta,restb)
 				      
-	fun bruteforce [] = None
+	fun bruteforce [] = NONE
 	  | bruteforce (permut::permutations) = let
 		val solution = zip (letters, permut)
 	    in
 		if (validateSolution solution) andalso
 		   check ((addends, sum), solution) then
-		    Some solution
+		    SOME solution
 		else
 		    bruteforce(permutations)
 	    end
