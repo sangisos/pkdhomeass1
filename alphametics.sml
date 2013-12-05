@@ -1,3 +1,44 @@
+
+type puzzle = string list * string;
+type solution = (char * int) list;
+
+structure PuzzleTools = struct
+    fun listLettersInWords [] = []
+      | listLettersInWords (word::rest) = explode(word)@listLettersInWords(rest)
+    (*	uniqueLetters (l)
+        TYPE: ''a list -> ''a list
+	PRE: true
+	POST: produces a list of uppercase alphabetical characters
+	EXAMPLE: uniqueLetters ([#"M",#"O",#"N",#"E",#"Y"]) =
+			 [#"Y",#"E",#"N",#"O",#"M"]
+		 uniqueLetters ([#"A",#"N",#"N",#"A"]) =
+			 [#"N",#"A"]
+	VARIANT: length l
+     *)
+    fun uniqueLetters [] = []
+      | uniqueLetters (letter::rest) = 
+	let
+	    val result = uniqueLetters(rest)
+	in
+	    if (List.exists (fn x => x = letter) result) then
+		result
+	    else
+		letter::result
+	end
+    fun uniqueLettersInWords [] = []
+      | uniqueLettersInWords words = 
+	uniqueLetters(listLettersInWords(words))
+    fun numberOfUniqueLettersInWords [] = 0
+      | numberOfUniqueLettersInWords words = 
+	length(uniqueLettersInWords(words))
+	
+end
+
+exception NoSolution;
+
+datatype 'a option = None | Some of 'a
+
+
 (*	validatePuzzle ((x,y))
 	TYPE: string list * string -> bool
 	PRE: true
@@ -38,31 +79,10 @@ fun validatePuzzle((addends,sum)) =
 	         [#"M",#"O",#"N",#"E",#"Y",#"S",#"E",#"N",#"D",#"M",#"O",#"R",#"E"]
 		VARIANT: length l
 	*)
-	fun listLettersInWords [] = []
-	  | listLettersInWords (word::rest) = explode(word)@listLettersInWords(rest)
-	(*	uniqueLetters (l)
-		TYPE: ''a list -> ''a list
-		PRE: true
-		POST: produces a list of uppercase alphabetical characters
-		EXAMPLE: uniqueLetters ([#"M",#"O",#"N",#"E",#"Y"]) =
-			 [#"Y",#"E",#"N",#"O",#"M"]
-			 uniqueLetters ([#"A",#"N",#"N",#"A"]) =
-			 [#"N",#"A"]
-		VARIANT: length l
-	*)
-	fun uniqueLetters [] = []
-	  | uniqueLetters (letter::rest) = 
-	    let
-		val result = uniqueLetters(rest)
-	    in
-		if (List.exists (fn x => x = letter) result) then
-		    result
-		else
-		    letter::result
-	    end
+
     in
 	checkWords(addends) andalso checkWords([sum]) andalso
-	length(uniqueLetters(listLettersInWords(sum::addends))) <= 10
+	PuzzleTools.numberOfUniqueLettersInWords(sum::addends) <= 10
     end;
 
 (*	validateSolution (l)
@@ -147,12 +167,14 @@ fun check ((addends, sum), solution) =
 	    end
 	(*	getDigit (letter, l)
 		TYPE: ''a * (''a * 'b) list -> 'b
-		PRE: true
+		PRE: l must be non-empty
 		POST: returns the value that letter is mapped to within l.
 		EXAMPLE: getDigit (#"J",[(#"H",1),(#"E",2),(#"J",3)]) = 3
+		SIDE-EFFECT: Raises Domain if l is empty.
 		VARIANT: length l
-	*)    
-	fun getDigit (letter, (l,digit)::rest) =
+	*)
+	fun getDigit (letter, []) = raise Domain
+	  | getDigit (letter, (l,digit)::rest) =
 	    if l=letter then digit else getDigit(letter,rest)
 	(*	getValueOfWord (word)
 		TYPE: string -> int
@@ -227,3 +249,36 @@ fun check ((addends, sum), solution) =
 	  sumList (map getValueOfWord addends) = getValueOfWord(sum)
       end;
 
+fun solve(addends, sum) =
+    let
+	(*
+	*)
+	val sumAddendsList = sum::addends
+	val letters = PuzzleTools.uniqueLettersInWords(sumAddendsList)
+	fun getDigitsExcept (except:int list):int list = List.filter (fn x => List.all (fn y => y <> x) except) (List.tabulate(10,(fn x => x)))
+	
+	fun permutations 0 = []
+	  | permutations 1 = List.tabulate(10,(fn x => [x]))
+	  | permutations n =
+	    let
+		val perm1 = permutations (n-1)
+	    in
+		List.concat (List.map (fn y => (List.map (fn z => y@[z]) (getDigitsExcept(y)))) perm1)
+	    end
+	    
+	fun zip ([],[]) = []
+	  | zip (a::resta,b::restb) = (a,b)::zip(resta,restb)
+				      
+	fun bruteforce [] = None
+	  | bruteforce (permut::permutations) = let
+		val solution = zip (letters, permut)
+	    in
+		if (validateSolution solution) andalso
+		   check ((addends, sum), solution) then
+		    Some solution
+		else
+		    bruteforce(permutations)
+	    end
+    in
+	bruteforce (permutations ( length letters ))
+    end;

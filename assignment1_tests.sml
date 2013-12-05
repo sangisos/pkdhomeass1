@@ -195,7 +195,7 @@ fun test () =
 (* exhaustive.                                                                *)
 (******************************************************************************)
 
-(*
+
 
 (******************************************************************************)
 (* To run the code below, the function solve must be declared and have the    *)
@@ -263,4 +263,4 @@ fun test_solve () =
     List.app result [(1, test), (2, test)]
   end;
 
-*)
+
